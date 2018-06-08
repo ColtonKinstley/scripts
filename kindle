@@ -1,0 +1,3 @@
+#! /bin/zsh
+
+ln $1 "$HOME/Documents/books/kindle/UHBooks/"$2

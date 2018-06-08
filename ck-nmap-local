@@ -1,0 +1,9 @@
+#! /usr/bin/python
+
+from ckpy import ckip
+import subprocess
+
+if __name__ == "__main__":
+	ip = ckip()
+	ip.getip()
+	print(subprocess.check_output(['nmap',ip.domain]))

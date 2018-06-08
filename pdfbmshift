@@ -1,0 +1,48 @@
+#! /usr/local/bin/python3
+import argparse
+import tempfile
+import shutil
+import subprocess
+
+
+def shiftBookMarks(n, input_file, output_file, begin, end):
+    if not output_file:
+        output_file = input_file
+
+    if n != 0:
+        with tempfile.NamedTemporaryFile(mode='w+t') as in_bmarks, tempfile.NamedTemporaryFile(mode='w+t') as out_bmarks:
+            subprocess.run('pdftk %s dump_data_utf8 output %s' % (input_file, in_bmarks.name), shell=True)
+
+            for line in in_bmarks:
+                if line.startswith('BookmarkPageNumber:'):
+                    parts = line.split(' ')
+
+                    if begin <= int(parts[1]) <= end:
+                        out_bmarks.write(parts[0] +' '+ str(int(parts[1])+n)+'\n')
+                    else:
+                        out_bmarks.write(line)
+                else:
+                    out_bmarks.write(line)
+            out_bmarks.flush()
+            update_bmarks = subprocess.run('pdftk %s update_info %s output %s'%(input_file, out_bmarks.name, output_file), shell=True)
+
+            return update_bmarks.returncode
+
+    elif n == 0 and output_file == input_file:
+        return 0
+
+    else:
+        shutil.copy(input_file, output_file)
+        return 0
+
+parser = argparse.ArgumentParser(description = 'Will shift the bookmarks of a pdf a given number of pages forward or backward.')
+parser.add_argument('input', help='A pdf file with bookmarks.')
+parser.add_argument('output', help = 'Output filename cannot match input fileneame.')
+parser.add_argument('shift', help = 'The number of pages to shift the bookmarks, use negitive page numbers to shift backwards.',type=int)
+parser.add_argument('--begin','-b', default = 0, type = int, help = 'Page to begin shifting bookmarks.')
+parser.add_argument('--end', '-e', default = 100000, type = int, help = 'Page to stop shifting bookmarks.')
+args = parser.parse_args()
+
+if args.input:
+    shiftBookMarks(args.shift, args.input, args.output, args.begin, args.end)
+

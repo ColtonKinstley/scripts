@@ -1,0 +1,3 @@
+#! /bin/bash
+
+bup index --exclude /Users/admin/Library/ /Users/admin && bup save --strip /Users/admin -n admin /Users/admin
