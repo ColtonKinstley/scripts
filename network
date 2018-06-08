@@ -1,0 +1,26 @@
+#! /usr/local/bin/python3
+
+import subprocess
+
+
+class Netowrk():
+
+	def __init__(self):
+        self.ip = subprocess.getoutput('curl ifconfig.me')
+        self.localIP = subprocess.getoutput('ipconfig getifaddr en0')
+
+    def getExternalIP():
+        print(self.ip)
+
+    def getLocalIP():
+        print(self.localIP)
+
+    def mapLocalNetwork():
+        if self.localIP:
+            end = '0-255'
+            domain = self.localIP.split('.')
+            domain[3] = end
+            ipRange = '.'.join(domain)
+            subprocess.run(['nmap',ipRange], shell=True)
+        else:
+            print('No connection.')
