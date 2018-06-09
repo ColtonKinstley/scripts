@@ -1,26 +1,43 @@
 #! /usr/local/bin/python3
 
 import subprocess
+import argparse
 
 
 class Netowrk():
 
-	def __init__(self):
-        self.ip = subprocess.getoutput('curl ifconfig.me')
+    def __init__(self):
+        self.ip = ''
         self.localIP = subprocess.getoutput('ipconfig getifaddr en0')
 
-    def getExternalIP():
+    def getExternalIP(self):
+        self.ip = subprocess.getoutput('curl -s ifconfig.me')
         print(self.ip)
 
-    def getLocalIP():
+    def getLocalIP(self):
         print(self.localIP)
 
-    def mapLocalNetwork():
+    def mapLocalNetwork(self):
         if self.localIP:
-            end = '0-255'
+            end = '0/24'
             domain = self.localIP.split('.')
             domain[3] = end
             ipRange = '.'.join(domain)
-            subprocess.run(['nmap',ipRange], shell=True)
+            subprocess.run('nmap -O %s' % ipRange, shell=True)
         else:
             print('No connection.')
+
+parser = argparse.ArgumentParser(description='A local netowrk utility. Get local and external ip, and find other computers on the network.')
+parser.add_argument('command', choices = ['local_ip', 'external_ip', 'map'], help='Local ip returns the ip address asssigned to this computer on the local netowrk. External ip returns the outfacing ip of the nework. Map gives the output of nmap run on all addresses on the local network.')
+
+args = parser.parse_args()
+
+net = Netowrk()
+
+if args.command == 'local_ip':
+    net.getLocalIP()
+if args.command == 'external_ip':
+    net.getExternalIP()
+if args.command == 'map':
+    net.mapLocalNetwork()
+
