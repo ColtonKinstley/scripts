@@ -1,10 +1,10 @@
-# scripts
+# Scripts
 Personal scripts to minimize redundant shell command strings.
 
 ## network
 
 
-''' bash
+```console
 A local netowrk utility. Get local and external ip, and find other computers
 on the network.
 
@@ -17,4 +17,4 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-'''
+```
