@@ -5,6 +5,8 @@ Personal scripts to minimize redundant shell command strings.
 
 
 ```console
+usage: network [-h] {local_ip,external_ip,map}
+
 A local netowrk utility. Get local and external ip, and find other computers
 on the network.
 
