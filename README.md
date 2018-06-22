@@ -28,6 +28,7 @@ optional arguments:
 usage: pdfbmshift [-h] [--begin BEGIN] [--end END] input output shift
 
 Will shift the bookmarks of a pdf a given number of pages forward or backward.
+Requires pdftk.
 
 positional arguments:
   input                 A pdf file with bookmarks.

@@ -35,7 +35,7 @@ def shiftBookMarks(n, input_file, output_file, begin, end):
         shutil.copy(input_file, output_file)
         return 0
 
-parser = argparse.ArgumentParser(description = 'Will shift the bookmarks of a pdf a given number of pages forward or backward.')
+parser = argparse.ArgumentParser(description = 'Will shift the bookmarks of a pdf a given number of pages forward or backward. Requires pdftk.')
 parser.add_argument('input', help='A pdf file with bookmarks.')
 parser.add_argument('output', help = 'Output filename cannot match input fileneame.')
 parser.add_argument('shift', help = 'The number of pages to shift the bookmarks, use negitive page numbers to shift backwards.',type=int)
