@@ -16,6 +16,7 @@ positional arguments:
                         computer on the local netowrk. External ip returns the
                         outfacing ip of the nework. Map gives the output of
                         nmap run on all addresses on the local network.
+			Requires nmap.
 
 optional arguments:
   -h, --help            show this help message and exit

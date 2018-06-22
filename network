@@ -28,7 +28,7 @@ class Netowrk():
             print('No connection.')
 
 parser = argparse.ArgumentParser(description='A local netowrk utility. Get local and external ip, and find other computers on the network.')
-parser.add_argument('command', choices = ['local_ip', 'external_ip', 'map'], help='Local ip returns the ip address asssigned to this computer on the local netowrk. External ip returns the outfacing ip of the nework. Map gives the output of nmap run on all addresses on the local network.')
+parser.add_argument('command', choices = ['local_ip', 'external_ip', 'map'], help='Local ip returns the ip address asssigned to this computer on the local netowrk. External ip returns the outfacing ip of the nework. Map gives the output of nmap run on all addresses on the local network. Requires nmap.')
 
 args = parser.parse_args()
 
