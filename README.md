@@ -23,6 +23,7 @@ optional arguments:
 ```
 
 ## pdfbmshift
+I primarily use this in conjunction with the great tool [kcroker/dpsprep](https://github.com/kcroker/dpsprep) for converting djvu's to pdf's. Getting this to run on OSX can be a bit tricky, you'll need to use imagemagick version 6 as a start. Perhaps I can provide more detail in the future as this still seems to be the only way to preserve ocr and toc without ballooning the file size to titanic perportions.
 
 ```console
 usage: pdfbmshift [-h] [--begin BEGIN] [--end END] input output shift
@@ -46,7 +47,7 @@ optional arguments:
   ## update-everything
   ```console
   usage: update-everything [-h] [--python] [--conda] [--vim] [--brew] [--zsh]
-                         [--gem] [--ycm] [--explicit]
+                         [--gem] [--ycm] [--explicit] [--clean]
 
 Updates system package managers. With no arguments pip3, conda, vim plugins,
 oh_my_zsh and homebrew will be updated. Called with arguments only the given
@@ -63,4 +64,6 @@ optional arguments:
   --gem, -g       Update ruby gems.
   --ycm, -y       Recompile the YouCompleteMe vim plugin.
   --explicit, -e  Only update package managers passed explicitly by flag.
+  --clean         Cleanup caches, unused or intermediate files. Used in the
+                  obvious way in brew and gem commands.
   ```
