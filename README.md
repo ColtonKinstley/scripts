@@ -23,7 +23,7 @@ optional arguments:
 ```
 
 ## pdfbmshift
-I primarily use this in conjunction with the great tool [kcroker/dpsprep](https://github.com/kcroker/dpsprep) for converting djvu's to pdf's. Getting this to run on OSX can be a bit tricky, you'll need to use imagemagick version 6 as a start. Perhaps I can provide more detail in the future as this still seems to be the only way to preserve ocr and toc without ballooning the file size to titanic perportions.
+I primarily use this in conjunction with the great tool [kcroker/dpsprep](https://github.com/kcroker/dpsprep) for converting djvu's to pdf's. Getting that script to run on OSX can be a bit tricky, you'll need to use imagemagick version 6 as a start. Perhaps I can provide more detail in the future as this still seems to be the only way to preserve ocr and toc without ballooning the file size to titanic perportions.
 
 ```console
 usage: pdfbmshift [-h] [--begin BEGIN] [--end END] input output shift
