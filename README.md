@@ -44,8 +44,8 @@ optional arguments:
   --end END, -e END     Page to stop shifting bookmarks.
   ```
   
-  ## update-everything
- What I use to keep my packages up to date. It should provide a good starting point for anyone else with similar needs. Obviously it can be improved greatly. 
+## update-everything
+What I use to keep my packages up to date. It should provide a good starting point for anyone else with similar needs. Obviously it can be improved greatly. 
   
   ```console
   usage: update-everything [-h] [--python] [--conda] [--vim] [--brew] [--zsh]
