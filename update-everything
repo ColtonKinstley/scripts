@@ -3,7 +3,7 @@ import subprocess
 import argparse
 
 def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean):
-    if not (python or brew or conda or vim or vim or explicit):
+    if not (python or brew or conda or vim or vim or explicit or clean):
         subprocess.run( 'brew update && brew upgrade', shell=True )
         subprocess.run( "pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin", shell=True )
         subprocess.run( 'conda upgrade -y --all', shell=True )
