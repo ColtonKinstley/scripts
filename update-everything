@@ -25,7 +25,7 @@ def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean):
     if ycm:
         subprocess.run( 'python3 ~/.vim/bundle/YouCompleteMe/install.py', shell=True )
     if clean:
-        subprocess.run( 'brew cleanup && brew cask cleanup; gem cleanup', shell=True)
+        subprocess.run( 'brew cleanup; brew cask cleanup; gem cleanup; conda clean --all -y', shell=True)
 
 parser = argparse.ArgumentParser(description = 'Updates system package managers. With no arguments pip3, conda, vim plugins, oh_my_zsh and homebrew will be updated. Called with arguments only the given package managers will be updated. With the exception of gem. Running with no flags is equivalent to update-everything -pcvbz.')
 parser.add_argument('--python', '-p', action='store_true', help = 'Update all pip3 packages.')
