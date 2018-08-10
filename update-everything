@@ -17,7 +17,7 @@ def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean):
     if conda:
         subprocess.run( 'conda upgrade -y --all', shell=True )
     if vim:
-        subprocess.run( 'vim +PluginUpdate +qall', shell=True )
+        subprocess.run( 'vim +PackUpdate +qall', shell=True )
     if zsh:
         subprocess.run( 'env ZSH=$ZSH sh $ZSH/tools/upgrade.sh', shell=True )
     if gem:
