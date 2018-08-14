@@ -2,7 +2,7 @@
 import subprocess
 import argparse
 
-def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean):
+def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean, backup):
     if not (python or brew or conda or vim or vim or explicit or clean):
         subprocess.run( 'brew update && brew upgrade', shell=True )
         subprocess.run( "pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin", shell=True )
@@ -17,7 +17,7 @@ def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean):
     if conda:
         subprocess.run( 'conda upgrade -y --all', shell=True )
     if vim:
-        subprocess.run( 'vim +PackUpdate +qall', shell=True )
+        subprocess.run( 'vim +PackUpdate +sleep +qall', shell=True )
     if zsh:
         subprocess.run( 'env ZSH=$ZSH sh $ZSH/tools/upgrade.sh', shell=True )
     if gem:
@@ -26,6 +26,12 @@ def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean):
         subprocess.run( 'python3 ~/.vim/bundle/YouCompleteMe/install.py', shell=True )
     if clean:
         subprocess.run( 'brew cleanup; brew cask cleanup; gem cleanup; conda clean --all -y', shell=True)
+    if backup:
+        subprocess.run( r"brew ls | sed 's/ /\r/g' > ~/.packages/brew.req", shell=True)
+        subprocess.run( r"brew cask ls | sed 's/ /\r/g' > ~/.packages/brew.req", shell=True)
+        subprocess.run( r"pip3 freeze > ~/.packages/python.req", shell=True)
+        subprocess.run( "gem list > ~/.packages/gems.req", shell=True)
+        subprocess.run( "bup index /Users/admin --exclude-from='/Users/admin/.bup_ignore' && bup save -n dotfiles /Users/admin", shell=True)
 
 parser = argparse.ArgumentParser(description = 'Updates system package managers. With no arguments pip3, conda, vim plugins, oh_my_zsh and homebrew will be updated. Called with arguments only the given package managers will be updated. With the exception of gem. Running with no flags is equivalent to update-everything -pcvbz.')
 parser.add_argument('--python', '-p', action='store_true', help = 'Update all pip3 packages.')
@@ -37,7 +43,9 @@ parser.add_argument('--gem', '-g', action='store_true', help = 'Update ruby gems
 parser.add_argument('--ycm', '-y', action='store_true', help = 'Recompile the YouCompleteMe vim plugin.')
 parser.add_argument('--explicit', '-e', action='store_true', help = 'Only update package managers passed explicitly by flag.')
 parser.add_argument('--clean', action='store_true', help= 'Cleanup caches, unused or intermediate files. Used in the obvious way in brew and gem commands.')
+parser.add_argument('--backup', action='store_true', help= 'Backup dotfiles to ~/Dropbox/Documents/backups/dotfiles. This also saves the installed python, brew, and gem packages into requirements files in .packages')
+
 
 args = parser.parse_args()
 
-updateEveryting(args.python, args.conda, args.vim, args.zsh, args.gem, args.brew, args.ycm, args.explicit, args.clean)
+updateEveryting(args.python, args.conda, args.vim, args.zsh, args.gem, args.brew, args.ycm, args.explicit, args.clean, args.backup)
