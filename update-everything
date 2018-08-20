@@ -5,25 +5,25 @@ import argparse
 def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean, backup):
     if not (python or brew or conda or vim or vim or explicit or clean):
         subprocess.run( 'brew update && brew upgrade', shell=True )
-        subprocess.run( "pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin", shell=True )
+        subprocess.run( "pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin -c ~/.pip_frozen.req", shell=True )
         subprocess.run( 'conda upgrade -y --all', shell=True )
-        subprocess.run( 'vim +PluginUpdate +qall', shell=True )
+        subprocess.run( 'vim +PackUpdate', shell=True )
         subprocess.run( 'env ZSH=$ZSH sh $ZSH/tools/upgrade.sh', shell=True )
     if brew:
-        subprocess.run( 'brew update && brew upgrade', shell=True )
+        subprocess.run( 'brew update && brew upgrade && brew cleanup --prune=7 && brew cask cleanup --prune=7', shell=True )
     if python:
         #a fire and forget method to update everything you have installed through pip
-        subprocess.run( r"pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin", shell=True )
+        subprocess.run( r"pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin -c ~/.pip_frozen.req", shell=True )
     if conda:
         subprocess.run( 'conda upgrade -y --all', shell=True )
     if vim:
-        subprocess.run( 'vim +PackUpdate +sleep +qall', shell=True )
+        subprocess.run( 'vim +PackUpdate', shell=True )
     if zsh:
         subprocess.run( 'env ZSH=$ZSH sh $ZSH/tools/upgrade.sh', shell=True )
     if gem:
         subprocess.run( 'gem update', shell=True )
     if ycm:
-        subprocess.run( 'python3 ~/.vim/bundle/YouCompleteMe/install.py', shell=True )
+        subprocess.run( 'python3 ~/.vim/pack/minpac/start/YouCompleteMe/install.py', shell=True )
     if clean:
         subprocess.run( 'brew cleanup; brew cask cleanup; gem cleanup; conda clean --all -y', shell=True)
     if backup:
