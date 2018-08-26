@@ -1,7 +1,4 @@
-#! /bin/zsh
+#! /bin/sh
 
 export MPLBACKEND="module://itermplot"
-export ITERMPLOT=rv
 export ITERMPLOT_LINES=34
-
-

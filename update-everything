@@ -2,31 +2,31 @@
 import subprocess
 import argparse
 
-def updateEveryting(python, conda, vim, zsh, gem, brew, ycm, explicit, clean, backup):
-    if not (python or brew or conda or vim or vim or explicit or clean):
-        subprocess.run( 'brew update && brew upgrade', shell=True )
+def updateEveryting(args):
+    if not (args.python or args.brew or args.conda or args.vim or args.vim or args.explicit):
+        subprocess.run( 'brew update && brew upgrade && brew cleanup --prune=14', shell=True )
         subprocess.run( "pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin -c ~/.pip_frozen.req", shell=True )
         subprocess.run( 'conda upgrade -y --all', shell=True )
-        subprocess.run( 'vim +PackUpdate', shell=True )
+        subprocess.run( 'vim +PackUpdateClose', shell=True )
         subprocess.run( 'env ZSH=$ZSH sh $ZSH/tools/upgrade.sh', shell=True )
-    if brew:
-        subprocess.run( 'brew update && brew upgrade && brew cleanup --prune=7 && brew cask cleanup --prune=7', shell=True )
-    if python:
+    if args.brew:
+        subprocess.run( 'brew update && brew upgrade && brew cleanup --prune=14', shell=True )
+    if args.python:
         #a fire and forget method to update everything you have installed through pip
         subprocess.run( r"pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin -c ~/.pip_frozen.req", shell=True )
-    if conda:
+    if args.conda:
         subprocess.run( 'conda upgrade -y --all', shell=True )
-    if vim:
-        subprocess.run( 'vim +PackUpdate', shell=True )
-    if zsh:
+    if args.vim:
+        subprocess.run( 'vim +PackUpdateClose', shell=True )
+    if args.zsh:
         subprocess.run( 'env ZSH=$ZSH sh $ZSH/tools/upgrade.sh', shell=True )
-    if gem:
+    if args.gem:
         subprocess.run( 'gem update', shell=True )
-    if ycm:
+    if args.ycm:
         subprocess.run( 'python3 ~/.vim/pack/minpac/start/YouCompleteMe/install.py', shell=True )
-    if clean:
-        subprocess.run( 'brew cleanup; brew cask cleanup; gem cleanup; conda clean --all -y', shell=True)
-    if backup:
+    if args.clean:
+        subprocess.run( 'brew cleanup; gem cleanup; conda clean --all -y; vim +PackCleanClose', shell=True)
+    if args.backup:
         subprocess.run( r"brew ls | sed 's/ /\r/g' > ~/.packages/brew.req", shell=True)
         subprocess.run( r"brew cask ls | sed 's/ /\r/g' > ~/.packages/brew.req", shell=True)
         subprocess.run( r"pip3 freeze > ~/.packages/python.req", shell=True)
@@ -48,4 +48,4 @@ parser.add_argument('--backup', action='store_true', help= 'Backup dotfiles to ~
 
 args = parser.parse_args()
 
-updateEveryting(args.python, args.conda, args.vim, args.zsh, args.gem, args.brew, args.ycm, args.explicit, args.clean, args.backup)
+updateEveryting(args)
