@@ -68,4 +68,7 @@ optional arguments:
   --explicit, -e  Only update package managers passed explicitly by flag.
   --clean         Cleanup caches, unused or intermediate files. Used in the
                   obvious way in brew and gem commands.
+  --backup        Backup dotfiles to ~/Dropbox/Documents/backups/dotfiles.
+                  This also saves the installed python, brew, and gem packages
+                  into requirements files in .packages
   ```
