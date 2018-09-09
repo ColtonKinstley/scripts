@@ -1,6 +1,6 @@
 #! /usr/local/bin/python3
-import subprocess
 import argparse
+import subprocess
 
 
 def updateEveryting(args):
@@ -37,7 +37,7 @@ def updateEveryting(args):
             "git -C ~/.vim/pack/minpac/start/YouCompleteMe/ submodule update --init --recursive",
             shell=True)
         subprocess.run(
-            "python3 ~/.vim/pack/minpac/start/YouCompleteMe/install.py --all",
+            "python3 ~/.vim/pack/minpac/start/YouCompleteMe/install.py",
             shell=True)
     if args.clean:
         subprocess.run(
