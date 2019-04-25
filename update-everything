@@ -7,12 +7,15 @@ def updateEveryting(args):
     if not (args.python or args.brew or args.conda or args.vim or args.vim
             or args.explicit):
         subprocess.run(
-            "brew update && brew upgrade && brew cleanup --prune=14",
+            "brew update && brew upgrade && brew cask upgrade && brew cleanup --prune=14",
             shell=True)
         subprocess.run(
             "pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin -c ~/.packages/pip_frozen.req",
             shell=True,
         )
+        subprocess.run(
+            "pipdeptree | grep '^[a-z,A-Z]' | sed 's/==.*//' | pip3 install -U -r /dev/stdin",
+            shell=True)
         subprocess.run("conda upgrade -y --all", shell=True)
         subprocess.run("vim +PackUpdateClose", shell=True)
         subprocess.run("env ZSH=$ZSH sh $ZSH/tools/upgrade.sh", shell=True)
@@ -24,6 +27,9 @@ def updateEveryting(args):
             r"pip3 freeze --all | sed 's/==.*//g' | pip3 install -U -r /dev/stdin -c ~/.packages/pip_frozen.req",
             shell=True,
         )
+        subprocess.run(
+            "pipdeptree | grep '^[a-z,A-Z]' | sed 's/==.*//' | pip3 install -U -r /dev/stdin",
+            shell=True)
     if args.conda:
         subprocess.run("conda upgrade -y --all", shell=True)
     if args.vim:

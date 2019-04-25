@@ -1,0 +1,9 @@
+case $1 in 
+    london|London)
+    aws cloudformation update-stack --region 'eu-west-2' --stack-name 'feature-stack' --template-url "https://s3-eu-west-2.amazonaws.com/thefilter-releases-eu-west-2/cloudformation/$2/startup/startup.yaml" --parameters ParameterKey=RuleVersion,ParameterValue='1' ParameterKey=Version,ParameterValue="$2" --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --role-arn 'arn:aws:iam::147726730760:role/CloudFormationRole'
+    ;;
+ireland|Ireland)
+    aws cloudformation update-stack --region 'eu-west-1' --stack-name 'dev-stack' --template-url "https://s3-eu-west-1.amazonaws.com/thefilter-releases-eu-west-1/cloudformation/$2/startup/startup.yaml" --parameters ParameterKey=RuleVersion,ParameterValue='1' ParameterKey=Version,ParameterValue="$2" --capabilities CAPABILITY_IAM CAPABILITY_NAMED_IAM CAPABILITY_AUTO_EXPAND --role-arn 'arn:aws:iam::147726730760:role/CloudFormationRole'
+    ;;
+esac
+
