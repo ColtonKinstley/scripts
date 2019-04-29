@@ -16,7 +16,6 @@ def updateEveryting(args):
         subprocess.run(
             "pipdeptree | grep '^[a-z,A-Z]' | sed 's/==.*//' | pip3 install -U -r /dev/stdin",
             shell=True)
-        subprocess.run("conda upgrade -y --all", shell=True)
         subprocess.run("vim +PackUpdateClose", shell=True)
         subprocess.run("env ZSH=$ZSH sh $ZSH/tools/upgrade.sh", shell=True)
     if args.brew:
@@ -46,14 +45,13 @@ def updateEveryting(args):
             "python3 ~/.vim/pack/minpac/start/YouCompleteMe/install.py",
             shell=True)
     if args.clean:
-        subprocess.run(
-            "brew cleanup; gem cleanup; conda clean --all -y", shell=True)
+        subprocess.run("brew cleanup; gem cleanup; conda clean --all -y",
+                       shell=True)
     if args.backup:
-        subprocess.run(
-            r"brew ls | sed 's/ /\r/g' > ~/.packages/brew.req", shell=True)
-        subprocess.run(
-            r"brew cask ls | sed 's/ /\r/g' > ~/.packages/brew.req",
-            shell=True)
+        subprocess.run(r"brew ls | sed 's/ /\r/g' > ~/.packages/brew.req",
+                       shell=True)
+        subprocess.run(r"brew cask ls | sed 's/ /\r/g' > ~/.packages/brew.req",
+                       shell=True)
         subprocess.run(r"pip3 freeze > ~/.packages/python.req", shell=True)
         subprocess.run("gem list > ~/.packages/gems.req", shell=True)
         subprocess.run(
@@ -70,27 +68,36 @@ parser = argparse.ArgumentParser(
     description=
     "Updates system package managers. With no arguments pip3, conda, vim plugins, oh_my_zsh and homebrew will be updated. Called with arguments only the given package managers will be updated. With the exception of gem. Running with no flags is equivalent to update-everything -pcvbz."
 )
-parser.add_argument(
-    "--python", "-p", action="store_true", help="Update all pip3 packages.")
+parser.add_argument("--python",
+                    "-p",
+                    action="store_true",
+                    help="Update all pip3 packages.")
 parser.add_argument(
     "--conda",
     "-c",
     action="store_true",
     help="Update all conda packages, no confirmation.",
 )
-parser.add_argument(
-    "--vim", "-v", action="store_true", help="Update all vundle plugins.")
-parser.add_argument(
-    "--brew", "-b", action="store_true", help="Update all homebrew packages.")
-parser.add_argument(
-    "--zsh", "-z", action="store_true", help="Update Oh My ZSH.")
-parser.add_argument(
-    "--gem", "-g", action="store_true", help="Update ruby gems.")
-parser.add_argument(
-    "--ycm",
-    "-y",
-    action="store_true",
-    help="Recompile the YouCompleteMe vim plugin.")
+parser.add_argument("--vim",
+                    "-v",
+                    action="store_true",
+                    help="Update all vundle plugins.")
+parser.add_argument("--brew",
+                    "-b",
+                    action="store_true",
+                    help="Update all homebrew packages.")
+parser.add_argument("--zsh",
+                    "-z",
+                    action="store_true",
+                    help="Update Oh My ZSH.")
+parser.add_argument("--gem",
+                    "-g",
+                    action="store_true",
+                    help="Update ruby gems.")
+parser.add_argument("--ycm",
+                    "-y",
+                    action="store_true",
+                    help="Recompile the YouCompleteMe vim plugin.")
 parser.add_argument(
     "--explicit",
     "-e",
