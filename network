@@ -4,7 +4,7 @@ import subprocess
 import argparse
 
 
-class Netowrk():
+class Network():
 
     def __init__(self):
         self.ip = ''
@@ -32,7 +32,7 @@ parser.add_argument('command', choices = ['local_ip', 'external_ip', 'map'], hel
 
 args = parser.parse_args()
 
-net = Netowrk()
+net = Network()
 
 if args.command == 'local_ip':
     net.getLocalIP()
